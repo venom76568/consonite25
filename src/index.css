@@ -271,3 +271,39 @@ body {
     opacity: 0.8;
   }
 }
+
+
+/* For mobile dropdown transition */
+.transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Styling for nav items */
+.nav-hover-btn:hover {
+  color: #4CAF50; /* Green color on hover */
+}
+
+/* Indicator lines for the audio button */
+.indicator-line {
+  width: 4px;
+  height: 6px;
+  background-color: #000;
+  margin-right: 2px;
+}
+
+.indicator-line.active {
+  background-color: #ffffff;
+  animation: indicatorPulse 0.5s infinite alternate;
+}
+
+/* Keyframe animation for indicator pulse */
+@keyframes indicatorPulse {
+  0% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1.5);
+  }
+}
+
+/* Add this in your main CSS file or directly in the header */

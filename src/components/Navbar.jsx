@@ -11,6 +11,7 @@ const navItems = ["Home", "CONSONITE", "Artist", "Contact Us"];
 const NavBar = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(true); // Set to true for autoplay
   const [isIndicatorActive, setIsIndicatorActive] = useState(true); // Active on autoplay
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Manage mobile menu state
 
   const audioElementRef = useRef(null);
   const navContainerRef = useRef(null);
@@ -59,6 +60,10 @@ const NavBar = () => {
     });
   }, [isNavVisible]);
 
+  const toggleMenu = () => {
+    setIsMenuOpen((prevState) => !prevState);
+  };
+
   return (
     <div
       ref={navContainerRef}
@@ -76,12 +81,39 @@ const NavBar = () => {
           </div>
 
           <div className="flex h-full items-center">
+            {/* Mobile Hamburger Icon */}
+            <div className="md:hidden flex items-center ml-auto">
+              <button onClick={toggleMenu} className="text-2xl text-white">
+                &#x22EE; {/* This is a '⋮' character representing the three dots */}
+              </button>
+            </div>
+
+            {/* Mobile Dropdown Menu */}
+            <div
+              className={clsx("md:hidden absolute top-16 left-0 w-full bg-black text-white p-4 font-zentry transition-all duration-300", {
+                "block": isMenuOpen,
+                "hidden": !isMenuOpen,
+              })}
+            >
+              {navItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={`#${item.toLowerCase()}`}
+                  className="block py-2 text-white hover:text-blue-500"
+                  onClick={() => setIsMenuOpen(false)} // Close the menu after click
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+
+            {/* Desktop Menu Items */}
             <div className="hidden md:block">
               {navItems.map((item, index) => (
                 <a
                   key={index}
                   href={`#${item.toLowerCase()}`}
-                  className="nav-hover-btn"
+                  className="nav-hover-btn font-zentry"
                 >
                   {item}
                 </a>
@@ -90,7 +122,7 @@ const NavBar = () => {
 
             <button
               onClick={toggleAudioIndicator}
-              className="ml-10 flex items-center space-x-0.5"
+              className="ml-10 flex items-center space-x-0.5 sm:flex hidden"
             >
               <audio
                 autoPlay

@@ -4,13 +4,15 @@ import styled from 'styled-components';
 const Button2 = () => {
   return (
     <StyledWrapper>
-      <button className="button">BOOK NOW :)</button>
+      <a href="#Register" className="button">
+        BOOK NOW :)
+      </a>
     </StyledWrapper>
   );
-}
+};
 
 const StyledWrapper = styled.div`
-  /* inspired form gumroad website */
+  /* inspired from gumroad website */
   .button {
     --bg: #000;
     --hover-bg: #ff90e8;
@@ -22,6 +24,9 @@ const StyledWrapper = styled.div`
     padding: 0.8em 2em;
     background: var(--bg);
     transition: 0.2s;
+    text-decoration: none;
+    display: inline-block; /* Makes it behave like a button */
+    text-align: center;
   }
 
   .button:hover {
@@ -34,6 +39,7 @@ const StyledWrapper = styled.div`
   .button:active {
     transform: translate(0);
     box-shadow: none;
-  }`;
+  }
+`;
 
 export default Button2;
