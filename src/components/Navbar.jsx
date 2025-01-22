@@ -27,7 +27,6 @@ const NavBar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleAudioIndicator = () => {
-    // Add a check to ensure audio can be played
     if (audioElementRef.current) {
       if (isAudioPlaying) {
         audioElementRef.current.pause();
@@ -39,35 +38,63 @@ const NavBar = () => {
     }
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
+    setIsMenuOpen(false); // Close the menu when audio is toggled
   };
 
+  // Initialize audio playback
   useEffect(() => {
     if (audioElementRef.current) {
       audioElementRef.current.volume = 0.60;
       
-      // Add interaction handler for mobile devices
-      const handleInteraction = () => {
-        if (isAudioPlaying) {
-          audioElementRef.current.play().catch((error) => {
-            console.warn("Audio autoplay failed: ", error);
+      // Try to play immediately
+      const playAudio = async () => {
+        try {
+          await audioElementRef.current.play();
+        } catch (error) {
+          console.warn("Initial autoplay failed, waiting for user interaction:", error);
+          
+          // Add multiple event listeners to try playing audio on first interaction
+          const handleInteraction = async () => {
+            try {
+              await audioElementRef.current.play();
+              // Remove event listeners after successful playback
+              ['click', 'touchstart', 'scroll'].forEach(event => {
+                document.removeEventListener(event, handleInteraction);
+              });
+            } catch (error) {
+              console.warn("Audio playback failed after interaction:", error);
+            }
+          };
+
+          // Add listeners for various user interactions
+          ['click', 'touchstart', 'scroll'].forEach(event => {
+            document.addEventListener(event, handleInteraction, { once: true });
           });
         }
       };
 
-      document.addEventListener('touchstart', handleInteraction, { once: true });
+      playAudio();
+
+      // Cleanup function
       return () => {
-        document.removeEventListener('touchstart', handleInteraction);
+        ['click', 'touchstart', 'scroll'].forEach(event => {
+          document.removeEventListener(event, () => {});
+        });
       };
     }
   }, []);
 
   useEffect(() => {
     const audio = audioElementRef.current;
+    if (!audio) return;
 
     if (isAudioPlaying) {
-      audio.play().catch((error) => {
-        console.warn("Audio autoplay failed: ", error);
-      });
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.warn("Audio playback failed:", error);
+        });
+      }
     } else {
       audio.pause();
     }
@@ -130,7 +157,9 @@ const NavBar = () => {
         className="hidden"
         src="/audio/loop.mp3"
         loop
-        playsInline // Add playsInline for better mobile support
+        playsInline
+        preload="auto"
+        muted={false}
       />
       
       <header className="absolute top-1/2 w-full -translate-y-1/2">
@@ -179,7 +208,7 @@ const NavBar = () => {
               ))}
               {/* Audio Controls in Mobile Menu */}
               <div className="py-2 flex items-center justify-between">
-                <span className="text-white">Audio Controls</span>
+                <span className="text-white" onClick={toggleAudioIndicator}>Audio Controls</span>
                 <AudioControls />
               </div>
             </div>
