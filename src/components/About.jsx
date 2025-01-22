@@ -2,6 +2,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import AnimatedTitle from "./AnimatedTitle";
+import Section from "./Section";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,26 +62,29 @@ const About = () => {
   });
 
   return (
+   
     <div id="about" className="min-h-screen overflow-x-hidden w-screen">
       <div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
-        <p className="font-general text-sm uppercase md:text-[30px]">
+        <p className="font-general text-sm z-30 text-white uppercase md:text-[30px]">
           Welcome to CONSO
         </p>
 
+       
+
         <AnimatedTitle
           title="<b>Redefining The B</b><b>oundaries</b> <br />Of H<b>o</b>rizon"
-          containerClass="mt-5 !text-black text-center"
+          containerClass="mt-5 !text-white text-center z-30"
         />
-
+       
         <div className="about-subtext">
           {/* Any additional text content can go here */}
         </div>
       </div>
 
       {/* New Section with Image on Left and Text on Right */}
-      <div className="flex flex-col md:flex-row overflow-x-auto items-center justify-between mt-16 px-4 space-y-8 md:space-y-0 md:space-x-8">
+      <div className="flex flex-col md:flex-row overflow-x-auto items-center h-full justify-between mt-16 px-4 space-y-8 md:space-y-0 md:space-x-8">
         {/* Image Container */}
-        <div className="md:w-1/2 flex justify-center items-center h-full">
+        <div className="md:w-1/2 flex justify-center items-center z-40 h-full">
           <img
             src={post}
             alt="About Section Image"
@@ -87,8 +93,8 @@ const About = () => {
         </div>
 
         {/* Text Container with Right Margin */}
-        <div className="md:w-1/2 text-center md:text-left flex justify-center items-center h-full">
-          <p className="text-lg md:text-xl font-robert-medium text-black scroll-paragraph mr-6"> {/* Added right margin with mr-6 */}
+        <div className="md:w-1/2 text-center md:text-left flex z-30 text-white justify-center items-center h-full">
+          <p className="text-lg md:text-xl font-robert-medium text-white scroll-paragraph mr-6"> {/* Added right margin with mr-6 */}
             🎶✨ Brace yourselves for an unforgettable night at Consonite, the
             grand spectacle on the third day of Consortium, brought to you by
             the Entrepreneurial Cell, VNIT! This is more than just a concert—it's
@@ -102,7 +108,6 @@ const About = () => {
           </p>
         </div>
       </div>
-      <div className="h-6"></div>
     </div>
   );
 };

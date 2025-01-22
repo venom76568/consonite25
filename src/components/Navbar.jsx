@@ -3,6 +3,8 @@ import gsap from "gsap";
 import { useWindowScroll } from "react-use";
 import { useEffect, useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
+import { BackgroundLines } from "@/components/ui/background-lines";
+
 
 import Button2 from "./Button2";
 
@@ -24,6 +26,11 @@ const NavBar = () => {
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
   };
+  useEffect(() => {
+    if (audioElementRef.current) {
+      audioElementRef.current.volume = 0.60; // Set volume %
+    }
+  }, []);
 
   useEffect(() => {
     const audio = audioElementRef.current;
@@ -65,10 +72,12 @@ const NavBar = () => {
   };
 
   return (
+
     <div
       ref={navContainerRef}
       className="fixed rounded-2xl inset-x-0 top-4 z-50 h-16 border-none transition-all duration-700 sm:inset-x-6"
     >
+      
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
           <div className="flex items-center gap-7">

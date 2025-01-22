@@ -1,9 +1,11 @@
 import ecellLogoWhite from "../assets/ecell-white-img.png";
 import { Link } from "react-router-dom";
+import { BackgroundLines } from "./ui/background-lines";
 
 const Footer = () => {
   return (
-    <footer id="footer" className="bg-black text-white text-center ">
+    
+    <footer id="footer" className="bg-black text-white z-60 text-center ">
       <div className="px-4 pb-6 sm:px-6 lg:px-8 pt-8">
         <div className="flex flex-col">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
@@ -24,11 +26,11 @@ const Footer = () => {
                 <p className="font-bold text-xl uppercase text-start">
                   Quick Links
                 </p>
-                <nav className="flex flex-col mt-4 space-y-2 items-center lg:items-start text-sm text-white">
+                <nav className="flex flex-col mt-4 space-y-2 items-center z-50 lg:items-start text-sm text-white">
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:opacity-75 uppercase"
+                    className="hover:opacity-75 uppercase z-50"
                     href="https://startupconclave.ecellvnit.org/"
                   >
                     Startup Conclave
@@ -60,10 +62,10 @@ const Footer = () => {
                 </nav>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <p className="font-bold text-xl uppercase text-start">
+                <p className="font-bold z-50 text-xl uppercase text-start">
                   Contact Us
                 </p>
-                <nav className="flex flex-col space-y-2 mt-4 text-center text-sm xl:text-base text-white">
+                <nav className="flex flex-col space-y-2 z-50 mt-4 text-center text-sm xl:text-base text-white">
                   <a
                     className="hover:opacity-75"
                     target="_blank"
@@ -86,7 +88,7 @@ const Footer = () => {
               </div>
               <div className="flex flex-col items-center gap-2">
                 <p className="font-bold text-xl uppercase">Follow Us</p>
-                <nav className="flex flex-col mt-4 space-y-3 items-start text-sm text-white">
+                <nav className="flex flex-col mt-4 space-y-3 z-50 items-start text-sm text-white">
                   <a
                     className="hover:opacity-75 flex justify-center gap-4"
                     href="https://www.instagram.com/ecellvnit/"
@@ -208,6 +210,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+   
   );
 };
 export default Footer;

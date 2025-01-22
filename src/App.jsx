@@ -1,20 +1,30 @@
+import Particles from 'react-tsparticles';
 import About from './components/About';
+
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import Nabvar from './components/Navbar';
+import { BackgroundLines } from "@/components/ui/background-lines";
+import Example from './components/Artist';
+
 
 
 const App = () => {
   return (
-    <main className="relative bg-slate-500 overflow-x-hidden min-h-screen w-screen">
-      {/* Particles Background */}
-     
-
+    
+    <main className="relative overflow-x-hidden bg-black min-h-screen w-screen">
+      
+    
       {/* Main Content */}
+
       <Nabvar />
       <Hero />
       <About />
+      <Example />
+     
+      
       <Footer />
+      
     </main>
   );
 };
