@@ -4,7 +4,7 @@ import AnimatedTitle from "./AnimatedTitle";
 
 const Example = () => {
   const scrollToFooter = () => {
-    const footerSection = document.getElementById('footer');
+    const footerSection = document.getElementById('Register');
     if (footerSection) {
       footerSection.scrollIntoView({ behavior: 'smooth' });
     }

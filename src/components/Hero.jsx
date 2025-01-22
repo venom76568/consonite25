@@ -10,6 +10,12 @@ import VideoPreview from "./VideoPreview";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
+  const scrollToFooter = () => {
+    const footerSection = document.getElementById('Register');
+    if (footerSection) {
+      footerSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
 
@@ -155,15 +161,15 @@ const Hero = () => {
             </p>
 
             
-
+            <div onClick={scrollToFooter}>
             <Button
-              id="Register"
+              id="chut"
               title="Register"
-              link="#Register"
+              onClick={scrollToFooter}
               leftIcon={<TiLocationArrow />}
               containerClass="bg-yellow-300 flex-center gap-1"
             />
-            
+            </div>
           </div>
         </div>
       </div>

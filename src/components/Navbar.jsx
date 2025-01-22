@@ -11,6 +11,12 @@ import Button2 from "./Button2";
 const navItems = ["Home", "CONSONITE", "Artist", "Contact Us"];
 
 const NavBar = () => {
+  const scrollToFooter = () => {
+    const footerSection = document.getElementById('Register');
+    if (footerSection) {
+      footerSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const [isAudioPlaying, setIsAudioPlaying] = useState(true); // Set to true for autoplay
   const [isIndicatorActive, setIsIndicatorActive] = useState(true); // Active on autoplay
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Manage mobile menu state
@@ -80,10 +86,11 @@ const NavBar = () => {
       
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
-          <div className="flex items-center gap-7">
-            <Button2
-              id="Register"
-              title="Register"
+          <div className="flex items-center gap-7" >
+            <Button2 
+              onClick={scrollToFooter}
+              id="rt"
+              title="a"
               rightIcon={<TiLocationArrow />}
               containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
             />
