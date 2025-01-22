@@ -11,7 +11,7 @@ const Example = () => {
   };
 
   return (
-    <div
+    <div id="artist"
       style={{
         display: 'flex',
         gap: '20px',

@@ -5,7 +5,7 @@ import { BackgroundLines } from "./ui/background-lines";
 const Footer = () => {
   return (
     
-    <footer id="footer" className="bg-black text-white z-60 text-center ">
+    <footer id="contact us" className="bg-black text-white z-60 text-center ">
       <div className="px-4 pb-6 sm:px-6 lg:px-8 pt-8">
         <div className="flex flex-col">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">

@@ -63,7 +63,7 @@ const About = () => {
 
   return (
    
-    <div id="about" className="min-h-screen overflow-x-hidden w-screen">
+    <div id="consonite" className="min-h-screen overflow-x-hidden w-screen">
       <div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
         <p className="font-general text-sm z-30 text-white uppercase md:text-[30px]">
           Welcome to CONSO
