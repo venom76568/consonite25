@@ -20,7 +20,7 @@ const Register = () => {
 
         <div>
         <AnimatedTitle
-          title="<b>A</b><b>r</b><b>t</b><b>i</b><b>s</b><b>t</b>"
+          title="<b>F</b><b>o</b><b>r</b><b>m</b>"
           containerClass="mt-5 !text-white text-center z-30 bottom-20"
         />
       </div>
