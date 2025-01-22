@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from 'react-animated-3d-card';
+import Card from './Card3d';
 import AnimatedTitle from "./AnimatedTitle";
 
 const Example = () => {
@@ -31,7 +31,7 @@ const Example = () => {
       </div>
       
       {/* Desktop Card - Hidden on mobile */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:block" onClick={scrollToFooter}>
         <Card
           style={{
             backgroundColor: '#fff',
@@ -43,7 +43,7 @@ const Example = () => {
             boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
             cursor: 'pointer',
           }}
-          onClick={scrollToFooter}
+          
         >
           <img
             src="https://static.vecteezy.com/system/resources/previews/003/582/701/non_2x/coming-soon-background-illustration-template-design-free-vector.jpg"

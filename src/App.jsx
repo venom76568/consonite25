@@ -1,10 +1,10 @@
-import Particles from 'react-tsparticles';
+
 import About from './components/About';
 import Register from './components/Form';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
 import Nabvar from './components/Navbar';
-import { BackgroundLines } from "@/components/ui/background-lines";
+
 import Example from './components/Artist';
 
 

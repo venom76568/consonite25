@@ -1,6 +1,4 @@
 import ecellLogoWhite from "../assets/ecell-white-img.png";
-import { Link } from "react-router-dom";
-import { BackgroundLines } from "./ui/background-lines";
 
 const Footer = () => {
   return (

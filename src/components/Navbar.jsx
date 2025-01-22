@@ -3,8 +3,6 @@ import gsap from "gsap";
 import { useWindowScroll } from "react-use";
 import { useEffect, useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
-import { BackgroundLines } from "@/components/ui/background-lines";
-
 
 import Button2 from "./Button2";
 
