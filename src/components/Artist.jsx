@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './Card3d';
 import AnimatedTitle from "./AnimatedTitle";
+import img from '../assets/image.png';
 
 const Example = () => {
   const scrollToFooter = () => {
@@ -12,16 +13,7 @@ const Example = () => {
 
   return (
     <div id="artist"
-      style={{
-        display: 'flex',
-        gap: '20px',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#000',
-        padding: '20px',
-        
-      }}
+      className="flex flex-col items-center justify-center gap-20 bg-black py-top-20 py-bottom-10"
     >
       <div>
         <AnimatedTitle
@@ -31,7 +23,7 @@ const Example = () => {
       </div>
       
       {/* Desktop Card - Hidden on mobile */}
-      <div className="hidden sm:block" onClick={scrollToFooter}>
+      <div className="hidden sm:block relative" onClick={scrollToFooter}>
         <Card
           style={{
             backgroundColor: '#fff',
@@ -43,30 +35,19 @@ const Example = () => {
             boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
             cursor: 'pointer',
           }}
-          
         >
           <img
-            src="https://static.vecteezy.com/system/resources/previews/003/582/701/non_2x/coming-soon-background-illustration-template-design-free-vector.jpg"
-            alt="Revealing Soon"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
+            src={img}
+            alt="Neeraj Shridhar"
+            className="w-full h-full object-cover"
           />
-          <div
-            style={{
-              position: 'absolute',
-              bottom: '20px',
-              width: '100%',
-              textAlign: 'center',
-              color: '#ff5722',
-              fontSize: '18px',
-              fontWeight: 'bold',
-            }}
-          >
-            Book Now
+          <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
+            <h2 className="text-white text-2xl font-bold text-center mb-1">
+              Neeraj Shridhar
+            </h2>
+            <p className="text-white/80 text-sm text-center">
+              Bombay Vikings
+            </p>
           </div>
         </Card>
       </div>
@@ -74,40 +55,36 @@ const Example = () => {
       {/* Mobile Card - Shown only on mobile */}
       <div className="block sm:hidden w-full max-w-[320px]">
         <div
-          style={{
-            backgroundColor: '#fff',
-            width: '100%',
-            height: '250px',
-            borderRadius: '15px',
-            overflow: 'hidden',
-            position: 'relative',
-            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-            cursor: 'pointer',
-          }}
+          className="relative"
           onClick={scrollToFooter}
         >
-          <img
-            src="https://static.vecteezy.com/system/resources/previews/003/582/701/non_2x/coming-soon-background-illustration-template-design-free-vector.jpg"
-            alt="Revealing Soon"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              display: 'block',
-            }}
-          />
           <div
             style={{
-              position: 'absolute',
-              bottom: '20px',
+              backgroundColor: '#fff',
               width: '100%',
-              textAlign: 'center',
-              color: '#ff5722',
-              fontSize: '16px',
-              fontWeight: 'bold',
+              height: '350px',
+              borderRadius: '15px',
+              overflow: 'hidden',
+              position: 'relative',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+              cursor: 'pointer',
             }}
           >
-            Book Now
+            <img
+              src={img}
+              alt="Neeraj Shridhar"
+              className="w-full h-full object-cover"
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent"
+            >
+              <h2 className="text-white text-xl font-bold text-center mb-1">
+                Neeraj Shridhar
+              </h2>
+              <p className="text-white/80 text-sm text-center">
+                Bombay Vikings
+              </p>
+            </div>
           </div>
         </div>
       </div>

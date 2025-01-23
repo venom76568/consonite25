@@ -1,4 +1,5 @@
 import React from 'react';
+import img from '../assets/image.png'; // Ensure this path is correct or update it to the correct path
 
 const Card = () => {
   return (
@@ -7,24 +8,43 @@ const Card = () => {
         {/* Card Content */}
         <div className="absolute inset-0">
           {/* Image Container */}
-          <div className="relative h-4/5 w-full overflow-hidden rounded-t-xl">
+          <div className="relative h-full w-full overflow-hidden rounded-t-xl">
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
             <div className="h-full w-full bg-gray-200 flex items-center justify-center">
-              <p className="text-gray-600 font-semibold text-base sm:text-lg">Coming Soon</p>
+              <img
+                          src={img}
+                          alt="Neeraj Shridhar"
+                          className="w-full h-full object-cover"
+                        />
+                        
             </div>
+            
           </div>
-          
-          {/* Bottom Content */}
-          <div className="absolute bottom-0 w-full h-1/5 bg-white rounded-b-xl shadow-lg">
+          <div className="absolute bottom-0 w-full h-1/5 rounded-b-xl shadow-lg">
             <div className="flex h-full items-center justify-center">
-              <button className="px-4 sm:px-6 py-1.5 sm:py-2 bg-black text-white rounded-full font-semibold text-sm sm:text-base
-                               transform transition-all duration-300 
-                               hover:scale-105 hover:bg-gray-800 
-                               active:scale-95">
-                Book Now
-              </button>
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
+                          <h2 className="text-white text-2xl font-bold opacity-100 text-center mb-1">
+                            Neeraj Shridhar
+                          </h2>
+                          <p className="text-white/80 text-sm text-center">
+                            Bombay Vikings
+                          </p>
+                        </div>
             </div>
           </div>
+          {/* Bottom Content */}
+          {/* <div className="absolute bottom-0 w-full h-1/5 bg-white rounded-b-xl shadow-lg">
+            <div className="flex h-full items-center justify-center">
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 to-transparent">
+                          <h2 className="text-white text-2xl font-bold text-center mb-1">
+                            Neeraj Shridhar
+                          </h2>
+                          <p className="text-white/80 text-sm text-center">
+                            Bombay Vikings
+                          </p>
+                        </div>
+            </div>
+          </div> */}
 
           {/* 3D Effect Elements */}
           <div className="absolute inset-0 h-full w-full rounded-xl border-2 border-white/10 transition-all duration-500 
