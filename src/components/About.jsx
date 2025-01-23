@@ -82,7 +82,7 @@ const About = () => {
       </div>
 
       {/* New Section with Image on Left and Text on Right */}
-      <div className="flex flex-col md:flex-row overflow-x-auto items-center h-full justify-between mt-16 px-4 space-y-8 md:space-y-0 md:space-x-8">
+      <div className="flex flex-col overflow-y-hidden md:flex-row overflow-x-auto items-center h-full justify-between mt-16 px-4 space-y-8 md:space-y-0 md:space-x-8">
         {/* Image Container */}
         <div className="md:w-1/2 flex justify-center items-center z-40 h-full">
           <img
