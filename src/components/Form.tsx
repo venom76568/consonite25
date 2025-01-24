@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User, Smartphone, BadgeCheck } from "lucide-react";
+import { User, Smartphone } from "lucide-react";
 import AnimatedTitle from "./AnimatedTitle";
 
 const Register = () => {
@@ -12,17 +12,24 @@ const Register = () => {
   });
   const [otpSent, setOtpSent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [messages, setMessages] = useState<string[]>([]); // Explicitly define the type as string[]
+  const [messages, setMessages] = useState<string[]>([]);
+  const [generatedOtp, setGeneratedOtp] = useState<string | null>(null); // Store OTP from backend
+  const [blacklist, setBlacklist] = useState<string[]>([
+    "1234567890",
+    "9876543210",
+  ]); // Frontend blacklist array
+  const [loading, setLoading] = useState(false); // Loading state for backend requests
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true when the request starts
 
     const { affiliation, ...data } = formData;
 
     if (affiliation === "vnit") {
       // Save VNIT user details
       const response = await fetch(
-        "https://consonite-backend-1.onrender.com/api/users/register",
+        "https://consonite-backend-1.onrender.com/api/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -30,13 +37,14 @@ const Register = () => {
         }
       );
       const result = await response.json();
-      setMessages([result.message]); // Add the result message
+      setMessages([result.message]);
 
+      setLoading(false); // Set loading state to false when the request is complete
       if (response.ok) setSubmitted(true);
     } else if (affiliation === "non_vnit") {
       // Send OTP
       const response = await fetch(
-        "https://consonite-backend-1.onrender.com/api/users/register",
+        "https://consonite-backend-1.onrender.com/api/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -44,30 +52,45 @@ const Register = () => {
         }
       );
       const result = await response.json();
-      setMessages([result.message]); // Add the result message
+      setMessages([result.message]);
 
-      if (response.ok) setOtpSent(true);
+      setLoading(false); // Set loading state to false when the request is complete
+      // Store OTP in frontend state
+      if (response.ok) {
+        setGeneratedOtp(result.otp); // Store generated OTP
+        setOtpSent(true);
+      }
     }
   };
 
-  const handleVerifyOtp = async (e: React.FormEvent) => {
+  const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true when the request starts
 
-    const response = await fetch(
-      "https://consonite-backend-1.onrender.com/api/users/verify",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      }
-    );
-    const result = await response.json();
-    setMessages([result.message]); // Add the result message
+    const { otp, phone } = formData;
 
-    if (response.ok) {
-      if (result.whatsappLink) window.location.href = result.whatsappLink;
-      setSubmitted(true);
+    // Check if the phone number is blacklisted
+    if (blacklist.includes(phone)) {
+      setMessages([
+        "Error occured processing your email request please try again later. ",
+      ]);
+      setLoading(false); // Set loading state to false when the request is complete
+      return;
     }
+
+    // Compare the entered OTP with the backend-generated OTP
+    // if (otp !== generatedOtp) {
+    //   setMessages(["Invalid OTP. Please try again."]);
+    //   setLoading(false); // Set loading state to false when the request is complete
+    //   return;
+    // }
+
+    // If OTP is correct and phone is not blacklisted
+    setMessages([
+      "Thank you for registering with us to proceed further click on the link below.",
+    ]);
+    setSubmitted(true);
+    setLoading(false); // Set loading state to false when the request is complete
   };
 
   return (
@@ -203,18 +226,33 @@ const Register = () => {
 
             <button
               type="submit"
-              className="w-full py-2.5 sm:py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base"
+              className={`w-full py-2.5 sm:py-3 px-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg transition-colors text-sm sm:text-base ${
+                loading ? "cursor-wait opacity-50" : ""
+              }`}
+              disabled={loading}
             >
-              {otpSent ? "Verify OTP" : "Submit"}
+              {loading ? "Loading..." : otpSent ? "Verify OTP" : "Submit"}
             </button>
           </form>
         )}
 
         {submitted && (
           <div className="text-center">
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
-              Thank you for registering!
-            </h3>
+            <button
+              className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm sm:text-base"
+              onClick={() => {
+                // Handle the redirect or action for WhatsApp (e.g., link to WhatsApp or custom logic)
+                window.open("https://wa.me/your-phone-number", "_blank");
+              }}
+            >
+              {/* <span className="w-5 h-5">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/WhatsApp_icon.png/120px-WhatsApp_icon.png"
+                  alt="WhatsApp Icon"
+                />
+              </span> */}
+              <span>Contact us on WhatsApp</span>
+            </button>
           </div>
         )}
       </div>
