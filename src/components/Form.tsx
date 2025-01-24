@@ -12,9 +12,9 @@ const Register = () => {
   });
   const [otpSent, setOtpSent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [messages, setMessages] = useState([]); // State to hold messages
+  const [messages, setMessages] = useState<string[]>([]); // Explicitly define the type as string[]
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { affiliation, ...data } = formData;
@@ -50,7 +50,7 @@ const Register = () => {
     }
   };
 
-  const handleVerifyOtp = async (e) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const response = await fetch(
