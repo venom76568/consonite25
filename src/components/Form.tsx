@@ -13,17 +13,12 @@ const Register = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
-  const [generatedOtp, setGeneratedOtp] = useState<string | null>(null); // Store OTP from backend
-  const [blacklist, setBlacklist] = useState<string[]>([
-    "1234567890",
-    "9876543210",
-  ]); // Frontend blacklist array
-  const [loading, setLoading] = useState(false); // Loading state for backend requests
+  const [generatedOtp, setGeneratedOtp] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const RedirectToWhatsApp = () => {
   const handleWhatsAppRedirect = () => {
-    const phoneNumber = "7517705046"; // Replace with the target phone number
-    const message = "Hi"; // Prefilled message
+    const phoneNumber = "1234567890"; // Replace with the actual WhatsApp number
+    const message = `Hi, I'm ${formData.name}. I've just registered!`; // Dynamic message
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
     )}`;
@@ -32,12 +27,11 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // Set loading state to true when the request starts
+    setLoading(true);
 
     const { affiliation, ...data } = formData;
 
     if (affiliation === "vnit") {
-      // Save VNIT user details
       const response = await fetch(
         "https://consonite-backend.onrender.com/register",
         {
@@ -48,11 +42,9 @@ const Register = () => {
       );
       const result = await response.json();
       setMessages([result.message]);
-
-      setLoading(false); // Set loading state to false when the request is complete
+      setLoading(false);
       if (response.ok) setSubmitted(true);
     } else if (affiliation === "non_vnit") {
-      // Send OTP
       const response = await fetch(
         "https://consonite-backend.onrender.com/register",
         {
@@ -63,11 +55,9 @@ const Register = () => {
       );
       const result = await response.json();
       setMessages([result.message]);
-
-      setLoading(false); // Set loading state to false when the request is complete
-      // Store OTP in frontend state
+      setLoading(false);
       if (response.ok) {
-        setGeneratedOtp(result.otp); // Store generated OTP
+        setGeneratedOtp(result.otp);
         setOtpSent(true);
       }
     }
@@ -75,32 +65,19 @@ const Register = () => {
 
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // Set loading state to true when the request starts
+    setLoading(true);
 
-    const { otp, phone } = formData;
-
-    // Check if the phone number is blacklisted
-    if (blacklist.includes(phone)) {
-      setMessages([
-        "Error occured processing your email request please try again later. ",
-      ]);
-      setLoading(false); // Set loading state to false when the request is complete
+    if (formData.otp !== generatedOtp) {
+      setMessages(["Invalid OTP. Please try again."]);
+      setLoading(false);
       return;
     }
 
-    // Compare the entered OTP with the backend-generated OTP
-    // if (otp !== generatedOtp) {
-    //   setMessages(["Invalid OTP. Please try again."]);
-    //   setLoading(false); // Set loading state to false when the request is complete
-    //   return;
-    // }
-
-    // If OTP is correct and phone is not blacklisted
     setMessages([
-      "Thank you for registering with us, to proceed further click on the link below.",
+      "Thank you for registering! For further details send `hi` to us on Whatsapp below..",
     ]);
     setSubmitted(true);
-    setLoading(false); // Set loading state to false when the request is complete
+    setLoading(false);
   };
 
   return (
@@ -120,7 +97,6 @@ const Register = () => {
           Event Registration
         </h2>
 
-        {/* Render messages if available */}
         {messages.length > 0 && (
           <div className="space-y-2 mb-4">
             {messages.map((message, index) => (
@@ -246,20 +222,12 @@ const Register = () => {
           </form>
         )}
 
-        {submitted && formData.affiliation === "non_vnit" && (
+        {submitted && (
           <div className="text-center">
             <button
               className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm sm:text-base"
               onClick={handleWhatsAppRedirect}
-            >
-              {/* <span className="w-5 h-5">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/WhatsApp_icon.png/120px-WhatsApp_icon.png"
-                  alt="WhatsApp Icon"
-                />
-              </span> */}
-              <span>Contact us on WhatsApp</span>
-            </button>
+            />
           </div>
         )}
       </div>
