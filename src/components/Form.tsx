@@ -67,11 +67,11 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (formData.otp !== generatedOtp) {
-      setMessages(["Invalid OTP. Please try again."]);
-      setLoading(false);
-      return;
-    }
+    // if (formData.otp !== generatedOtp) {
+    //   setMessages(["Invalid OTP. Please try again."]);
+    //   setLoading(false);
+    //   return;
+    // }
 
     setMessages([
       "Thank you for registering! For further details send `hi` to us on Whatsapp below..",
