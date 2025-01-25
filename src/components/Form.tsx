@@ -17,7 +17,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const handleWhatsAppRedirect = () => {
-    const phoneNumber = "1234567890"; // Replace with the actual WhatsApp number
+    const phoneNumber = "7517705046"; // Replace with the actual WhatsApp number
     const message = `Hi, I'm ${formData.name}. I've just registered!`; // Dynamic message
     const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
       message
@@ -227,7 +227,9 @@ const Register = () => {
             <button
               className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm sm:text-base"
               onClick={handleWhatsAppRedirect}
-            />
+            >
+              Message us.
+            </button>
           </div>
         )}
       </div>
