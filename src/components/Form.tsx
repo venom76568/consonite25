@@ -20,6 +20,16 @@ const Register = () => {
   ]); // Frontend blacklist array
   const [loading, setLoading] = useState(false); // Loading state for backend requests
 
+  const RedirectToWhatsApp = () => {
+  const handleWhatsAppRedirect = () => {
+    const phoneNumber = "7517705046"; // Replace with the target phone number
+    const message = "Hi"; // Prefilled message
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappLink, "_blank");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true); // Set loading state to true when the request starts
@@ -29,7 +39,7 @@ const Register = () => {
     if (affiliation === "vnit") {
       // Save VNIT user details
       const response = await fetch(
-        "https://consonite-backend-1.onrender.com/api/register",
+        "https://consonite-backend.onrender.com/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -44,7 +54,7 @@ const Register = () => {
     } else if (affiliation === "non_vnit") {
       // Send OTP
       const response = await fetch(
-        "https://consonite-backend-1.onrender.com/api/register",
+        "https://consonite-backend.onrender.com/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -87,7 +97,7 @@ const Register = () => {
 
     // If OTP is correct and phone is not blacklisted
     setMessages([
-      "Thank you for registering with us to proceed further click on the link below.",
+      "Thank you for registering with us, to proceed further click on the link below.",
     ]);
     setSubmitted(true);
     setLoading(false); // Set loading state to false when the request is complete
@@ -240,10 +250,7 @@ const Register = () => {
           <div className="text-center">
             <button
               className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm sm:text-base"
-              onClick={() => {
-                // Handle the redirect or action for WhatsApp (e.g., link to WhatsApp or custom logic)
-                window.open("https://wa.me/", "_blank");
-              }}
+              onClick={handleWhatsAppRedirect}
             >
               {/* <span className="w-5 h-5">
                 <img
