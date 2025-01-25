@@ -272,7 +272,6 @@ body {
   }
 }
 
-
 /* For mobile dropdown transition */
 .transition-all {
   transition: all 0.3s ease-in-out;
@@ -280,7 +279,7 @@ body {
 
 /* Styling for nav items */
 .nav-hover-btn:hover {
-  color: #4CAF50; /* Green color on hover */
+  color: #4caf50; /* Green color on hover */
 }
 
 /* Indicator lines for the audio button */
@@ -307,4 +306,3 @@ body {
 }
 
 /* Add this in your main CSS file or directly in the header */
-

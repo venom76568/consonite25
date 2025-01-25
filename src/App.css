@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transition-all {
+  transition: all 0.5s ease-in-out;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

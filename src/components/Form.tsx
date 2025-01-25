@@ -236,13 +236,13 @@ const Register = () => {
           </form>
         )}
 
-        {submitted && (
+        {submitted && formData.affiliation === "non_vnit" && (
           <div className="text-center">
             <button
               className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm sm:text-base"
               onClick={() => {
                 // Handle the redirect or action for WhatsApp (e.g., link to WhatsApp or custom logic)
-                window.open("https://wa.me/your-phone-number", "_blank");
+                window.open("https://wa.me/", "_blank");
               }}
             >
               {/* <span className="w-5 h-5">

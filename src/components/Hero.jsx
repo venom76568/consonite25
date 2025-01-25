@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { TiLocationArrow } from "react-icons/ti";
+import { TiLocationArrow, TiArrowDownOutline } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
 
 import Button from "./Button";
@@ -11,14 +11,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const scrollToFooter = () => {
-    const footerSection = document.getElementById('Register');
+    const footerSection = document.getElementById("Register");
     if (footerSection) {
-      footerSection.scrollIntoView({ behavior: 'smooth' });
+      footerSection.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
-
   const [loading, setLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0);
 
@@ -89,16 +89,25 @@ const Hero = () => {
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
   return (
-    
     <div id="home" className="relative h-dvh w-screen overflow-x-hidden">
-      
+      {/* Loader with Scroll Down Button */}
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
-          {/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
           <div className="three-body">
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
+          </div>
+
+          {/* Scroll Down Button */}
+          <div
+            onClick={scrollToFooter}
+            className="absolute bottom-10 flex cursor-pointer flex-col items-center gap-2"
+          >
+            <span className="text-base font-semibold text-gray-600">
+              Scroll Down
+            </span>
+            <TiArrowDownOutline className="text-3xl text-gray-600 animate-bounce" />
           </div>
         </div>
       )}
@@ -148,33 +157,28 @@ const Hero = () => {
           />
         </div>
 
-        
-
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
             <h1 className="special-font hero-heading text-[#dc143c]">
-              co<b>n</b>so<span className="text-white"><b>n</b>ITE</span>
+              co<b>n</b>so
+              <span className="text-white">
+                <b>n</b>ITE
+              </span>
             </h1>
-
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
-            Get ready for an unforgettable night of live music and energy –<br />  grab your tickets now!
+              Get ready for an unforgettable night of live music and energy –
+              <br />
+              grab your tickets now!
             </p>
-
-            
-            <div onClick={scrollToFooter}>
             <Button
-              id="chut"
               title="Register"
               onClick={scrollToFooter}
               leftIcon={<TiLocationArrow />}
               containerClass="bg-yellow-300 flex-center gap-1"
             />
-            </div>
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 };
