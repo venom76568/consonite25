@@ -66,10 +66,10 @@ const NavBar = () => {
       const distanceToFooter = footerPosition - (scrollPosition + windowHeight);
       const maxDistance = footerPosition - windowHeight;
       
-      // Calculate volume (0.6 at top, 0.1 at footer)
+      // Calculate volume (0.7 at top, 0.1 at footer)
       const volume = Math.max(
         0.1,
-        0.8 - (0.5 * (1 - (distanceToFooter / maxDistance)))
+        0.7 - (0.5 * (1 - (distanceToFooter / maxDistance)))
       );
       
       audioElementRef.current.volume = volume;
