@@ -1,11 +1,12 @@
+import React from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { TiLocationArrow, TiArrowDownOutline } from "react-icons/ti";
 import { useEffect, useRef, useState } from "react";
-
+import poster from "../assets/56.jpg";
 import Button from "./Button";
-import VideoPreview from "./VideoPreview";
+import he from "../assets/hero-2.mp4";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,12 +22,18 @@ const Hero = () => {
   const [hasClicked, setHasClicked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
 
   const totalVideos = 4;
   const nextVdRef = useRef(null);
+  const mainVideoRef = useRef(null);
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
+  };
+
+  const handleCanPlay = () => {
+    setVideoReady(true);
   };
 
   useEffect(() => {
@@ -34,12 +41,6 @@ const Hero = () => {
       setLoading(false);
     }
   }, [loadedVideos]);
-
-  const handleMiniVdClick = () => {
-    setHasClicked(true);
-
-    setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
-  };
 
   useGSAP(
     () => {
@@ -52,7 +53,7 @@ const Hero = () => {
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => nextVdRef.current.play(),
+          onStart: () => nextVdRef.current?.play(),
         });
         gsap.from("#current-video", {
           transformOrigin: "center center",
@@ -86,11 +87,8 @@ const Hero = () => {
     });
   });
 
-  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
-
   return (
     <div id="home" className="relative h-dvh w-screen overflow-x-hidden">
-      {/* Loader with Scroll Down Button */}
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
           <div className="three-body">
@@ -99,7 +97,6 @@ const Hero = () => {
             <div className="three-body__dot"></div>
           </div>
 
-          {/* Scroll Down Button */}
           <div
             onClick={scrollToFooter}
             className="absolute bottom-10 flex cursor-pointer flex-col items-center gap-2"
@@ -118,43 +115,58 @@ const Hero = () => {
       >
         <div>
           <div className="mask-clip-path absolute-center absolute z-0 size-64 cursor-pointer overflow-hidden rounded-lg">
-            <VideoPreview>
-              <div
-                onClick={handleMiniVdClick}
-                className="origin-center scale-0 opacity-0 transition-all duration-500 ease-in hover:scale-0 hover:opacity-100"
-              >
-                <video
-                  ref={nextVdRef}
-                  src={getVideoSrc((currentIndex % totalVideos) + 1)}
-                  loop
-                  muted
-                  id="current-video"
-                  className="size-64 origin-center scale-0 object-cover object-center"
-                  onLoadedData={handleVideoLoad}
-                />
-              </div>
-            </VideoPreview>
+            <div className="origin-center scale-0 opacity-0 transition-all duration-500 ease-in hover:scale-0 hover:opacity-100">
+              <video
+                src={he}
+                loop
+                muted
+                playsInline
+                poster={poster}
+                id="current-video"
+                className="size-64 origin-center scale-0 object-cover object-center"
+                onLoadedData={handleVideoLoad}
+                onCanPlay={handleCanPlay}
+              />
+            </div>
           </div>
 
           <video
             ref={nextVdRef}
-            src={getVideoSrc(currentIndex)}
+            src={he}
             loop
             muted
+            playsInline
+            poster={poster}
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onLoadedData={handleVideoLoad}
+            onCanPlay={handleCanPlay}
           />
-          <video
-            src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex
+          
+          {/* Main background video with poster */}
+          <div className="absolute left-0 top-0 size-full">
+            {!videoReady && (
+              <img 
+                src={poster} 
+                alt="Concert poster" 
+                className="absolute left-0 top-0 size-full object-cover object-center"
+              />
             )}
-            autoPlay
-            loop
-            muted
-            className="absolute left-0 top-0 size-full object-cover object-center"
-            onLoadedData={handleVideoLoad}
-          />
+            <video
+              ref={mainVideoRef}
+              src={he}
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={poster}
+              className={`absolute left-0 top-0 size-full object-cover object-center ${
+                videoReady ? 'opacity-100' : 'opacity-0'
+              } transition-opacity duration-500`}
+              onLoadedData={handleVideoLoad}
+              onCanPlay={handleCanPlay}
+            />
+          </div>
         </div>
 
         <div className="absolute left-0 top-0 z-40 size-full">

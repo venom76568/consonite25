@@ -8,6 +8,14 @@ import Button2 from "./Button2";
 
 const navItems = ["Home", "CONSONITE", "Artist", "Contact Us"];
 
+// Array of music tracks
+const musicTracks = [
+  "/audio/loop.mp3",
+  "/audio/loop1.mp3",
+  "/audio/loop2.mp3",
+  "/audio/loop3.mp3"
+];
+
 const NavBar = () => {
   const scrollToFooter = () => {
     const footerSection = document.getElementById('Register');
@@ -18,6 +26,9 @@ const NavBar = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(true);
   const [isIndicatorActive, setIsIndicatorActive] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentTrack] = useState(() => 
+    musicTracks[Math.floor(Math.random() * musicTracks.length)]
+  );
 
   const audioElementRef = useRef(null);
   const navContainerRef = useRef(null);
@@ -38,26 +49,47 @@ const NavBar = () => {
     }
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
-    setIsMenuOpen(false); // Close the menu when audio is toggled
+    setIsMenuOpen(false);
   };
+
+  // Update volume based on scroll position
+  useEffect(() => {
+    if (audioElementRef.current) {
+      const footerSection = document.getElementById('Register');
+      if (!footerSection) return;
+
+      const footerPosition = footerSection.offsetTop;
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      
+      const distanceToFooter = footerPosition - (scrollPosition + windowHeight);
+      const maxDistance = footerPosition - windowHeight;
+      
+      // Calculate volume (0.6 at top, 0.1 at footer)
+      const volume = Math.max(
+        0.1,
+        0.8 - (0.5 * (1 - (distanceToFooter / maxDistance)))
+      );
+      
+      audioElementRef.current.volume = volume;
+    }
+  }, [currentScrollY]);
 
   // Initialize audio playback
   useEffect(() => {
     if (audioElementRef.current) {
       audioElementRef.current.volume = 0.60;
       
-      // Try to play immediately
       const playAudio = async () => {
         try {
           await audioElementRef.current.play();
         } catch (error) {
           console.warn("Initial autoplay failed, waiting for user interaction:", error);
           
-          // Add multiple event listeners to try playing audio on first interaction
           const handleInteraction = async () => {
             try {
               await audioElementRef.current.play();
-              // Remove event listeners after successful playback
               ['click', 'touchstart', 'scroll'].forEach(event => {
                 document.removeEventListener(event, handleInteraction);
               });
@@ -66,7 +98,6 @@ const NavBar = () => {
             }
           };
 
-          // Add listeners for various user interactions
           ['click', 'touchstart', 'scroll'].forEach(event => {
             document.addEventListener(event, handleInteraction, { once: true });
           });
@@ -75,7 +106,6 @@ const NavBar = () => {
 
       playAudio();
 
-      // Cleanup function
       return () => {
         ['click', 'touchstart', 'scroll'].forEach(event => {
           document.removeEventListener(event, () => {});
@@ -83,7 +113,7 @@ const NavBar = () => {
       };
     }
   }, []);
-
+  
   useEffect(() => {
     const audio = audioElementRef.current;
     if (!audio) return;
@@ -155,7 +185,7 @@ const NavBar = () => {
       <audio
         ref={audioElementRef}
         className="hidden"
-        src="/audio/loop.mp3"
+        src={currentTrack}
         loop
         playsInline
         preload="auto"
@@ -175,7 +205,6 @@ const NavBar = () => {
           </div>
 
           <div className="flex h-full items-center">
-            {/* Mobile Hamburger Icon */}
             <div className="md:hidden flex items-center ml-auto">
               <button 
                 onClick={toggleMenu} 
@@ -186,7 +215,6 @@ const NavBar = () => {
               </button>
             </div>
 
-            {/* Mobile Dropdown Menu */}
             <div
               className={clsx(
                 "md:hidden absolute top-16 left-0 w-full bg-black text-white p-4 font-zentry transition-all duration-300",
@@ -206,14 +234,12 @@ const NavBar = () => {
                   {item}
                 </a>
               ))}
-              {/* Audio Controls in Mobile Menu */}
               <div className="py-2 flex items-center justify-between">
                 <span className="text-white" onClick={toggleAudioIndicator}>Audio Controls</span>
                 <AudioControls />
               </div>
             </div>
 
-            {/* Desktop Menu Items */}
             <div className="hidden md:block">
               {navItems.map((item, index) => (
                 <a
@@ -226,7 +252,6 @@ const NavBar = () => {
               ))}
             </div>
 
-            {/* Desktop Audio Controls */}
             <div className="ml-10 sm:flex hidden">
               <AudioControls />
             </div>
