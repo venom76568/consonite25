@@ -15,6 +15,7 @@ const Register = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [generatedOtp, setGeneratedOtp] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isNonVnit, setIsNonVnit] = useState(false); // Track if non-VNIT
 
   const handleWhatsAppRedirect = () => {
     const phoneNumber = "7517705046"; // Replace with the actual WhatsApp number
@@ -66,12 +67,6 @@ const Register = () => {
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    // if (formData.otp !== generatedOtp) {
-    //   setMessages(["Invalid OTP. Please try again."]);
-    //   setLoading(false);
-    //   return;
-    // }
 
     setMessages([
       "Thank you for registering! For further details send `hi` to us on Whatsapp below..",
@@ -179,9 +174,11 @@ const Register = () => {
               <select
                 name="affiliation"
                 value={formData.affiliation}
-                onChange={(e) =>
-                  setFormData({ ...formData, affiliation: e.target.value })
-                }
+                onChange={(e) => {
+                  const affiliation = e.target.value;
+                  setFormData({ ...formData, affiliation });
+                  setIsNonVnit(affiliation === "non_vnit"); // Update isNonVnit state
+                }}
                 className="w-full py-2.5 sm:py-3 px-4 rounded-lg bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-white"
                 required
               >
@@ -222,7 +219,7 @@ const Register = () => {
           </form>
         )}
 
-        {submitted && (
+        {submitted && isNonVnit && (
           <div className="text-center">
             <button
               className="flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors text-sm sm:text-base"
