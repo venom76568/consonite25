@@ -2,8 +2,8 @@ import React from 'react';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { TiLocationArrow, TiArrowDownOutline } from "react-icons/ti";
-import { useEffect, useRef, useState } from "react";
+import { TiLocationArrow } from "react-icons/ti";
+import { useRef, useState } from "react";
 import poster from "../assets/56.jpg";
 import Button from "./Button";
 import he from "../assets/hero-2.mp4";
@@ -20,27 +20,14 @@ const Hero = () => {
 
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [loadedVideos, setLoadedVideos] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
 
-  const totalVideos = 4;
   const nextVdRef = useRef(null);
   const mainVideoRef = useRef(null);
-
-  const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
-  };
 
   const handleCanPlay = () => {
     setVideoReady(true);
   };
-
-  useEffect(() => {
-    if (loadedVideos === totalVideos - 1) {
-      setLoading(false);
-    }
-  }, [loadedVideos]);
 
   useGSAP(
     () => {
@@ -89,26 +76,6 @@ const Hero = () => {
 
   return (
     <div id="home" className="relative h-dvh w-screen overflow-x-hidden">
-      {loading && (
-        <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
-          <div className="three-body">
-            <div className="three-body__dot"></div>
-            <div className="three-body__dot"></div>
-            <div className="three-body__dot"></div>
-          </div>
-
-          <div
-            onClick={scrollToFooter}
-            className="absolute bottom-10 flex cursor-pointer flex-col items-center gap-2"
-          >
-            <span className="text-base font-semibold text-gray-600">
-              Scroll Down
-            </span>
-            <TiArrowDownOutline className="text-3xl text-gray-600 animate-bounce" />
-          </div>
-        </div>
-      )}
-
       <div
         id="video-frame"
         className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
@@ -124,7 +91,6 @@ const Hero = () => {
                 poster={poster}
                 id="current-video"
                 className="size-64 origin-center scale-0 object-cover object-center"
-                onLoadedData={handleVideoLoad}
                 onCanPlay={handleCanPlay}
               />
             </div>
@@ -139,19 +105,18 @@ const Hero = () => {
             poster={poster}
             id="next-video"
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
-            onLoadedData={handleVideoLoad}
             onCanPlay={handleCanPlay}
           />
           
           {/* Main background video with poster */}
           <div className="absolute left-0 top-0 size-full">
-            {!videoReady && (
-              <img 
-                src={poster} 
-                alt="Concert poster" 
-                className="absolute left-0 top-0 size-full object-cover object-center"
-              />
-            )}
+            <img 
+              src={poster} 
+              alt="Concert poster" 
+              className={`absolute left-0 top-0 size-full object-cover object-center transition-opacity duration-500 ${
+                videoReady ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
             <video
               ref={mainVideoRef}
               src={he}
@@ -160,10 +125,9 @@ const Hero = () => {
               muted
               playsInline
               poster={poster}
-              className={`absolute left-0 top-0 size-full object-cover object-center ${
+              className={`absolute left-0 top-0 size-full object-cover object-center transition-opacity duration-500 ${
                 videoReady ? 'opacity-100' : 'opacity-0'
-              } transition-opacity duration-500`}
-              onLoadedData={handleVideoLoad}
+              }`}
               onCanPlay={handleCanPlay}
             />
           </div>
