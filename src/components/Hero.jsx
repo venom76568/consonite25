@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
@@ -107,14 +107,14 @@ const Hero = () => {
             className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
             onCanPlay={handleCanPlay}
           />
-          
+
           {/* Main background video with poster */}
           <div className="absolute left-0 top-0 size-full">
-            <img 
-              src={poster} 
-              alt="Concert poster" 
+            <img
+              src={poster}
+              alt="Concert poster"
               className={`absolute left-0 top-0 size-full object-cover object-center transition-opacity duration-500 ${
-                videoReady ? 'opacity-0' : 'opacity-100'
+                videoReady ? "opacity-0" : "opacity-100"
               }`}
             />
             <video
@@ -126,7 +126,7 @@ const Hero = () => {
               playsInline
               poster={poster}
               className={`absolute left-0 top-0 size-full object-cover object-center transition-opacity duration-500 ${
-                videoReady ? 'opacity-100' : 'opacity-0'
+                videoReady ? "opacity-100" : "opacity-0"
               }`}
               onCanPlay={handleCanPlay}
             />
@@ -151,6 +151,7 @@ const Hero = () => {
               onClick={scrollToFooter}
               leftIcon={<TiLocationArrow />}
               containerClass="bg-yellow-300 flex-center gap-1"
+              link="#Register"
             />
           </div>
         </div>
